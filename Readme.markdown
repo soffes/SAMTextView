@@ -1,4 +1,4 @@
-# UITextView
+# SAMTextView
 
 Add a placeholder to UITextView.
 
@@ -14,10 +14,10 @@ SAMTextView *textView = [[SAMTextView alloc] initWithFrame:CGRectMake(20.0f, 20.
 textView.placeholder = @"Type something…";
 
 // Change the placeholder color
-textField.placeholderTextColor = [UIColor lightGrayColor];
+textView.placeholderTextColor = [UIColor lightGrayColor];
 ```
 
-See the [header](UITextView/UITextView.h) for full documentation.
+See the [header](SAMTextView/SAMTextView.h) for full documentation.
 
 ## Installation
 
