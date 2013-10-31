@@ -107,8 +107,6 @@
 	// Inset the rect
 	CGRect rect = UIEdgeInsetsInsetRect(bounds, self.contentInset);
 
-	UIFont *font = self.font ? self.font : self.typingAttributes[NSFontAttributeName];
-
 	if (self.typingAttributes) {
 		NSParagraphStyle *style = self.typingAttributes[NSParagraphStyleAttributeName];
 		if (style) {
