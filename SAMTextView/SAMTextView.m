@@ -107,6 +107,11 @@
 	// Inset the rect
 	CGRect rect = UIEdgeInsetsInsetRect(bounds, self.contentInset);
 
+  if ([self respondsToSelector:@selector(textContainer)]) {
+    rect = UIEdgeInsetsInsetRect(rect, self.textContainerInset);
+    rect.origin.x += self.textContainer.lineFragmentPadding;
+  }
+
 	if (self.typingAttributes) {
 		NSParagraphStyle *style = self.typingAttributes[NSParagraphStyleAttributeName];
 		if (style) {
