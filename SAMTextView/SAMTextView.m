@@ -8,8 +8,6 @@
 
 #import "SAMTextView.h"
 
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-
 @implementation SAMTextView
 
 #pragma mark - Accessors
@@ -98,7 +96,7 @@
 
 		// Draw the text
 		[self.placeholderTextColor set];
-        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")){
+        if ([_placeholder respondsToSelector:@selector(drawInRect:withAttributes:)]){
             NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
             paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
             paragraphStyle.alignment = self.textAlignment;
