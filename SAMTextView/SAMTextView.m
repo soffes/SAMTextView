@@ -12,8 +12,7 @@
 
 #pragma mark - Accessors
 
-@synthesize placeholder = _placeholder;
-@synthesize placeholderTextColor = _placeholderTextColor;
+@synthesize attributedPlaceholder = _attributedPlaceholder;
 
 - (void)setText:(NSString *)string {
 	[super setText:string];
@@ -34,11 +33,40 @@
 
 
 - (void)setPlaceholder:(NSString *)string {
-	if ([string isEqual:_placeholder]) {
+	if ([string isEqualToString:self.attributedPlaceholder.string]) {
 		return;
 	}
+	
+	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+	if (self.typingAttributes) {
+		[attributes addEntriesFromDictionary:self.typingAttributes];
+	} else {
+		attributes[NSFontAttributeName] = self.font;
+		attributes[NSForegroundColorAttributeName] = [UIColor colorWithWhite:0.702f alpha:1.0f];
+		
+		if (self.textAlignment != NSTextAlignmentLeft) {
+			NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+			paragraph.alignment = self.textAlignment;
+			attributes[NSParagraphStyleAttributeName] = paragraph;
+		}
+	}
+	
+	self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:string attributes:attributes];
+}
 
-	_placeholder = string;
+
+- (NSString *)placeholder {
+	return self.attributedPlaceholder.string;
+}
+
+
+- (void)setAttributedPlaceholder:(NSAttributedString *)attributedPlaceholder {
+	if ([_attributedPlaceholder isEqualToAttributedString:attributedPlaceholder]) {
+		return;
+	}
+	
+	_attributedPlaceholder = attributedPlaceholder;
+	
 	[self setNeedsDisplay];
 }
 
@@ -114,17 +142,13 @@
 #pragma mark - Placeholder
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
-	// Inset the rect
 	CGRect rect = UIEdgeInsetsInsetRect(bounds, self.contentInset);
 
-	UIFont *font = self.font ? self.font : self.typingAttributes[NSFontAttributeName];
-
-	if (self.typingAttributes) {
-		NSParagraphStyle *style = self.typingAttributes[NSParagraphStyleAttributeName];
-		if (style) {
-			rect.origin.x += style.headIndent;
-			rect.origin.y += style.firstLineHeadIndent;
-		}
+	if ([self respondsToSelector:@selector(textContainer)]) {
+		rect = UIEdgeInsetsInsetRect(rect, self.textContainerInset);
+		CGFloat padding = self.textContainer.lineFragmentPadding;
+		rect.origin.x += padding;
+		rect.size.width -= padding * 2.0f;
 	}
 
 	return rect;
@@ -135,8 +159,6 @@
 
 - (void)initialize {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
-
-	self.placeholderTextColor = [UIColor colorWithWhite:0.702f alpha:1.0f];
 }
 
 
