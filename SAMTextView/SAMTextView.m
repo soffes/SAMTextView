@@ -38,7 +38,9 @@
 	}
 	
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-	if (self.typingAttributes) {
+    if (self.placeholderTextAttributes) {
+        [attributes addEntriesFromDictionary:self.placeholderTextAttributes];
+    } else if (self.typingAttributes) {
 		[attributes addEntriesFromDictionary:self.typingAttributes];
 	} else {
 		attributes[NSFontAttributeName] = self.font;
@@ -70,6 +72,15 @@
 	[self setNeedsDisplay];
 }
 
+- (void)setPlaceholderTextAttributes:(NSDictionary *)placeholderTextAttributes {
+    if ([placeholderTextAttributes isEqualToDictionary:_placeholderTextAttributes]) {
+        return;
+    }
+    
+    _placeholderTextAttributes = placeholderTextAttributes;
+    
+    self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.attributedPlaceholder.string attributes:_placeholderTextAttributes];
+}
 
 - (void)setContentInset:(UIEdgeInsets)contentInset {
 	[super setContentInset:contentInset];
