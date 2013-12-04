@@ -38,7 +38,9 @@
 	}
 	
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-	if (self.typingAttributes) {
+    if (self.placeholderTextAttributes) {
+        [attributes addEntriesFromDictionary:self.placeholderTextAttributes];
+    } else if (self.typingAttributes) {
 		[attributes addEntriesFromDictionary:self.typingAttributes];
 	} else {
 		attributes[NSFontAttributeName] = self.font;
@@ -70,6 +72,15 @@
 	[self setNeedsDisplay];
 }
 
+- (void)setPlaceholderTextAttributes:(NSDictionary *)placeholderTextAttributes {
+    if ([placeholderTextAttributes isEqualToDictionary:_placeholderTextAttributes]) {
+        return;
+    }
+    
+    _placeholderTextAttributes = placeholderTextAttributes;
+    
+    self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:self.attributedPlaceholder.string attributes:_placeholderTextAttributes];
+}
 
 - (void)setContentInset:(UIEdgeInsets)contentInset {
 	[super setContentInset:contentInset];
@@ -116,7 +127,7 @@
 
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
-
+    
 	// Draw placeholder if necessary
 	if (self.text.length == 0 && self.attributedPlaceholder) {
 		CGRect placeholderRect = [self placeholderRectForBounds:self.bounds];
@@ -129,14 +140,14 @@
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
 	CGRect rect = UIEdgeInsetsInsetRect(bounds, self.contentInset);
-
+    
 	if ([self respondsToSelector:@selector(textContainer)]) {
 		rect = UIEdgeInsetsInsetRect(rect, self.textContainerInset);
 		CGFloat padding = self.textContainer.lineFragmentPadding;
 		rect.origin.x += padding;
 		rect.size.width -= padding * 2.0f;
 	}
-
+    
 	return rect;
 }
 
