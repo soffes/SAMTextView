@@ -88,6 +88,11 @@
 	[self setNeedsDisplay];
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    [self setNeedsDisplay];
+}
 
 #pragma mark - NSObject
 
