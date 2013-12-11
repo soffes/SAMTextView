@@ -38,7 +38,7 @@
 	}
 	
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-	if (self.typingAttributes) {
+	if ([self isFirstResponder] && self.typingAttributes) {
 		[attributes addEntriesFromDictionary:self.typingAttributes];
 	} else {
 		attributes[NSFontAttributeName] = self.font;
