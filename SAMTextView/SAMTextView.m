@@ -141,7 +141,7 @@
         if (self.contentInset.left == 0.0f) {
             rect.origin.x += 8.0f;
         }
-        rect.origin.y += 8.0f;
+        rect.origin.y += self.contentInset.top;
     }
 
 	return rect;
