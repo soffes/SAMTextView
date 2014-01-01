@@ -3,7 +3,7 @@
 //  SAMTextView
 //
 //  Created by Sam Soffes on 8/18/10.
-//  Copyright 2010-2013 Sam Soffes. All rights reserved.
+//  Copyright 2010-2014 Sam Soffes. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -23,7 +23,7 @@
 
 /**
  The attributed string that is displayed when there is no other text in the text view.
- 
+
  The default value is `nil`.
  */
 @property (nonatomic, strong) NSAttributedString *attributedPlaceholder;
