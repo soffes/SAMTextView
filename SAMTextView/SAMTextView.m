@@ -85,6 +85,18 @@
 
 - (void)setFont:(UIFont *)font {
 	[super setFont:font];
+
+	NSMutableAttributedString *attributedPlaceholder = [self.attributedPlaceholder mutableCopy];
+	if (attributedPlaceholder) {
+		NSRange range = NSMakeRange(0, attributedPlaceholder.length);
+		if (font == nil) {
+			[attributedPlaceholder removeAttribute:NSFontAttributeName range:range];
+		} else {
+			[attributedPlaceholder addAttribute:NSFontAttributeName value:font range:range];
+		}
+		self.attributedPlaceholder = attributedPlaceholder;
+	}
+
 	[self setNeedsDisplay];
 }
 
