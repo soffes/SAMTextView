@@ -36,6 +36,10 @@
 	if ([string isEqualToString:self.attributedPlaceholder.string]) {
 		return;
 	}
+	if (string == nil) {
+		self.attributedPlaceholder = nil;
+		return;
+	}
 
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
 	if ([self isFirstResponder] && self.typingAttributes) {
