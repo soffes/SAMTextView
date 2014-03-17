@@ -136,11 +136,11 @@
 		rect.origin.x += padding;
 		rect.size.width -= padding * 2.0f;
 	} else {
-        if (self.contentInset.left == 0.0f) {
-            rect.origin.x += 8.0f;
-        }
-        rect.origin.y += 8.0f;
-    }
+		if (self.contentInset.left == 0.0f) {
+			rect.origin.x += 8.0f;
+		}
+		rect.origin.y += 8.0f;
+	}
 
 	return rect;
 }
