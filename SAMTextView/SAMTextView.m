@@ -114,6 +114,16 @@
 }
 
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
+- (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
+	if ((self = [super initWithFrame:frame textContainer:textContainer])) {
+		[self initialize];
+	}
+	return self;
+}
+#endif
+
+
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
 
