@@ -114,6 +114,14 @@
 }
 
 
+- (instancetype)initWithFrame:(CGRect)frame textContainer:(NSTextContainer *)textContainer {
+	if ((self = [super initWithFrame:frame textContainer:textContainer])) {
+		[self initialize];
+	}
+	return self;
+}
+
+
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
 
