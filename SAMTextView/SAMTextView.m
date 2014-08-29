@@ -3,7 +3,7 @@
 //  SAMTextView
 //
 //  Created by Sam Soffes on 8/18/10.
-//  Copyright 2010-2013 Sam Soffes. All rights reserved.
+//  Copyright 2010-2014 Sam Soffes. All rights reserved.
 //
 
 #import "SAMTextView.h"
@@ -36,21 +36,21 @@
 	if ([string isEqualToString:self.attributedPlaceholder.string]) {
 		return;
 	}
-	
+
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-	if (self.typingAttributes) {
+	if ([self isFirstResponder] && self.typingAttributes) {
 		[attributes addEntriesFromDictionary:self.typingAttributes];
 	} else {
 		attributes[NSFontAttributeName] = self.font;
 		attributes[NSForegroundColorAttributeName] = [UIColor colorWithWhite:0.702f alpha:1.0f];
-		
+
 		if (self.textAlignment != NSTextAlignmentLeft) {
 			NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
 			paragraph.alignment = self.textAlignment;
 			attributes[NSParagraphStyleAttributeName] = paragraph;
 		}
 	}
-	
+
 	self.attributedPlaceholder = [[NSAttributedString alloc] initWithString:string attributes:attributes];
 }
 
@@ -64,9 +64,9 @@
 	if ([_attributedPlaceholder isEqualToAttributedString:attributedPlaceholder]) {
 		return;
 	}
-	
+
 	_attributedPlaceholder = attributedPlaceholder;
-	
+
 	[self setNeedsDisplay];
 }
 
@@ -140,6 +140,11 @@
 		CGFloat padding = self.textContainer.lineFragmentPadding;
 		rect.origin.x += padding;
 		rect.size.width -= padding * 2.0f;
+	} else {
+		if (self.contentInset.left == 0.0f) {
+			rect.origin.x += 8.0f;
+		}
+		rect.origin.y += 8.0f;
 	}
 
 	return rect;
