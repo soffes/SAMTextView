@@ -40,8 +40,10 @@
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
 	if ([self isFirstResponder] && self.typingAttributes) {
 		[attributes addEntriesFromDictionary:self.typingAttributes];
-	} else {
-		attributes[NSFontAttributeName] = self.font;
+    } else {
+        if (self.font) {
+            attributes[NSFontAttributeName] = self.font;
+        }
 		attributes[NSForegroundColorAttributeName] = [UIColor colorWithWhite:0.702f alpha:1.0f];
 
 		if (self.textAlignment != NSTextAlignmentLeft) {
