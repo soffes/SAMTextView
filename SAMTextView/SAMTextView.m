@@ -125,13 +125,13 @@
 }
 
 
-- (void)layoutSubviews
-{
+- (void)layoutSubviews {
 	[super layoutSubviews];
 
 	// Redraw placeholder text when the layout changes if necessary
-	if (self.text.length == 0 && self.attributedPlaceholder)
+	if (self.attributedPlaceholder && self.text.length == 0) {
 		[self setNeedsDisplay];
+	}
 }
 
 
