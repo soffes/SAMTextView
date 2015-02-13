@@ -125,6 +125,16 @@
 }
 
 
+- (void)layoutSubviews
+{
+	[super layoutSubviews];
+
+	// Redraw placeholder text when the layout changes if necessary
+	if (self.text.length == 0 && self.attributedPlaceholder)
+		[self setNeedsDisplay];
+}
+
+
 #pragma mark - Placeholder
 
 - (CGRect)placeholderRectForBounds:(CGRect)bounds {
