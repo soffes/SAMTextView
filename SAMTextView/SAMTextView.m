@@ -36,12 +36,18 @@
 	if ([string isEqualToString:self.attributedPlaceholder.string]) {
 		return;
 	}
+	if (string == nil) {
+		self.attributedPlaceholder = nil;
+		return;
+	}
 
 	NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
 	if ([self isFirstResponder] && self.typingAttributes) {
 		[attributes addEntriesFromDictionary:self.typingAttributes];
 	} else {
-		attributes[NSFontAttributeName] = self.font;
+		if (self.font) {
+			attributes[NSFontAttributeName] = self.font;
+		}
 		attributes[NSForegroundColorAttributeName] = [UIColor colorWithWhite:0.702f alpha:1.0f];
 
 		if (self.textAlignment != NSTextAlignmentLeft) {
@@ -79,6 +85,18 @@
 
 - (void)setFont:(UIFont *)font {
 	[super setFont:font];
+
+	NSMutableAttributedString *attributedPlaceholder = [self.attributedPlaceholder mutableCopy];
+	if (attributedPlaceholder) {
+		NSRange range = NSMakeRange(0, attributedPlaceholder.length);
+		if (font == nil) {
+			[attributedPlaceholder removeAttribute:NSFontAttributeName range:range];
+		} else {
+			[attributedPlaceholder addAttribute:NSFontAttributeName value:font range:range];
+		}
+		self.attributedPlaceholder = attributedPlaceholder;
+	}
+
 	[self setNeedsDisplay];
 }
 
