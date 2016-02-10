@@ -42,7 +42,7 @@
 		[attributes addEntriesFromDictionary:self.typingAttributes];
 	} else {
 		attributes[NSFontAttributeName] = self.font;
-		attributes[NSForegroundColorAttributeName] = [UIColor colorWithWhite:0.702f alpha:1.0f];
+		attributes[NSForegroundColorAttributeName] = [UIColor colorWithRed:199.0/255.0 green:199.0/255.0 blue:205.0/255.0 alpha:1.0];
 
 		if (self.textAlignment != NSTextAlignmentLeft) {
 			NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
