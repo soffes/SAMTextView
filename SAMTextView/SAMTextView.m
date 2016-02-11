@@ -117,10 +117,24 @@
 - (void)drawRect:(CGRect)rect {
 	[super drawRect:rect];
 
-	// Draw placeholder if necessary
-	if (self.text.length == 0 && self.attributedPlaceholder) {
-		CGRect placeholderRect = [self placeholderRectForBounds:self.bounds];
-		[self.attributedPlaceholder drawInRect:placeholderRect];
+	if (self.text.length == 0 && self.placeholder) {
+		rect = [self placeholderRectForBounds:self.bounds];
+
+		UIFont *font = self.font ? self.font : self.typingAttributes[NSFontAttributeName];
+
+		// Draw the text
+		[self.placeholderTextColor set];
+        if ([_placeholder respondsToSelector:@selector(drawInRect:withAttributes:)]){
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            paragraphStyle.lineBreakMode = NSLineBreakByTruncatingTail;
+            paragraphStyle.alignment = self.textAlignment;
+            NSDictionary *attributes = @{NSFontAttributeName : self.font,
+                                         NSParagraphStyleAttributeName : paragraphStyle};
+            [_placeholder drawInRect:rect withAttributes:attributes];
+        }
+        else {
+            [self.placeholder drawInRect:rect withFont:font lineBreakMode:NSLineBreakByTruncatingTail alignment:self.textAlignment];
+        }
 	}
 }
 
