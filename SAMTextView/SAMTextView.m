@@ -88,7 +88,6 @@
 	[self setNeedsDisplay];
 }
 
-
 #pragma mark - NSObject
 
 - (void)dealloc {
@@ -160,6 +159,7 @@
 
 - (void)initialize {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:self];
+	self.contentMode = UIViewContentModeRedraw;
 }
 
 
