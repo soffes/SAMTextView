@@ -141,7 +141,8 @@
 	CGRect rect = UIEdgeInsetsInsetRect(bounds, self.contentInset);
 
 	if ([self respondsToSelector:@selector(textContainer)]) {
-		rect = UIEdgeInsetsInsetRect(rect, self.textContainerInset);
+        	rect.origin.x += self.textContainerInset.left;
+        	rect.origin.y += self.textContainerInset.top;
 		CGFloat padding = self.textContainer.lineFragmentPadding;
 		rect.origin.x += padding;
 		rect.size.width -= padding * 2.0f;
